@@ -29,7 +29,18 @@ Route::group(['middleware' => 'auth'] , function(){
 });
 
 Route::group(['middleware' => ['auth','admin']] , function(){
-    Route::get('/admin' , 'App\Http\Controllers\Homecontroller@admin');
+    Route::get('/admin/category' , 'App\Http\Controllers\Categorycontroller@index')->name('category.index');
+    Route::get('/admin/category/create' , 'App\Http\Controllers\Categorycontroller@create')->name('category.create');
+    Route::post('/admin/category/store' , 'App\Http\Controllers\Categorycontroller@store')->name('category.store');
+    Route::post('/admin/category/update' , 'App\Http\Controllers\Categorycontroller@update')->name('category.update');
+    Route::get('/admin/category/edit/{id}' , 'App\Http\Controllers\Categorycontroller@edit')->name('category.edit');
+    Route::get('/admin/category/delete/{id}' , 'App\Http\Controllers\Categorycontroller@delete')->name('category.delete');
+
+
+    // Route For Post
+    
+    Route::get('/admin/post/delete/{id}' , 'App\Http\Controllers\Postcontroller@delete')->name('posts.delete');
+    Route::resource('posts', 'App\Http\Controllers\Postcontroller');
 });
 
 
