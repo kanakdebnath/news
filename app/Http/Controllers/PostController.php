@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
@@ -17,7 +18,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        
+        $models = Post::with('category')->get();
+        return view('admin.post.index',compact('models'));
     }
 
     /**
@@ -47,10 +49,12 @@ class PostController extends Controller
             'description' => ['required'],
             'photo' => ['required']
        ]);
+       
 
        $model = new Post;
        $model->title = $request->title;
        $model->category_id = $request->category_id;
+       $model->added_by = Auth::user()->id;
        $model->status = $request->status;
        $model->short_description = $request->short_description;
        $model->description = $request->description;
@@ -95,9 +99,9 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($id)
     {
-        //
+    //    dd($id);
     }
 
     /**

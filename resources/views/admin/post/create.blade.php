@@ -6,6 +6,8 @@
 @endpush
 @section('content')
 
+
+
 <div class="pagetitle">
     <h1>Post</h1>
     <nav>

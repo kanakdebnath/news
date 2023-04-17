@@ -21,12 +21,10 @@ Route::get('/', function () {
 
 //Frontend Route
 Route::get('about', 'App\Http\Controllers\Homecontroller@about')->name('about');
+Route::get('post-detail/{slug}', 'App\Http\Controllers\Homecontroller@single_post')->name('single-post');
+Route::get('single', 'App\Http\Controllers\Homecontroller@single')->name('single');
 
 
-Route::group(['middleware' => 'auth'] , function(){
-    
-
-});
 
 Route::group(['middleware' => ['auth','admin']] , function(){
     Route::get('/admin/category' , 'App\Http\Controllers\Categorycontroller@index')->name('category.index');

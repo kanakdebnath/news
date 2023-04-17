@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,5 +24,15 @@ class HomeController extends Controller
 
     public function about(){
         return view('frontend.about');
+    }
+
+    public function single(){
+        return view('frontend.single-post');
+    }
+
+    public function single_post($slug){
+
+        $post = Post::where('slug',$slug)->first();
+        return view('frontend.single-post',compact('post'));
     }
 }
