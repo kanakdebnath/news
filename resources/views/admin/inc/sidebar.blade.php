@@ -44,6 +44,14 @@
               <i class="bi bi-circle"></i><span>Add Posts</span>
             </a>
           </li>
+
+          <li>
+            <a href="{{ route('select.search') }}">
+              <i class="bi bi-circle"></i><span>Select2 Search</span>
+            </a>
+          </li>
+
+
         </ul>
       </li>
       

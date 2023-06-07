@@ -101,7 +101,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-    //    dd($id);
+        $model = Post::findOrFail($id);
+        $models = Category::where('status','Active')->get();
+        return view('admin.post.edit',compact('models','model'));
     }
 
     /**
@@ -113,7 +115,39 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+       
+       $model = $post;
+       $model->title = $request->title;
+       $model->category_id = $request->category_id;
+       $model->status = $request->status;
+       $model->short_description = $request->short_description;
+       $model->description = $request->description;
+       $model->slug = Str::slug($request->title);
+
+       if($request->hasFile('photo')){
+            $file = $request->file('photo');
+            $ext = $file->extension() ? : 'png';
+            $photo = Str::random(10) . '.' . $ext;
+
+            // resize image
+
+            $path = public_path(). '/uploads/post/';
+            $resize = Image::make($file->getRealPath());
+            $resize->resize(900,570);
+
+            // Old Photo Delete 
+            if($request->old_photo){
+                $asdsdf = public_path(). '/uploads/post/'.$request->old_photo;
+                unlink($asdsdf);
+            }
+            $resize->save($path.'/'.$photo);
+
+            $model->photo = $photo;
+       }
+
+       $model->save();
+
+        return redirect()->route('posts.index')->with('message','Post Update Successfully');
     }
 
     /**
@@ -127,8 +161,41 @@ class PostController extends Controller
         //
     }
 
-    public function delete(Request $request)
+    public function delete($id)
     {
-        //
+        $model = Post::findOrFail($id);
+        if($model->photo){
+            $asdsdf = public_path(). '/uploads/post/'.$model->photo;
+            unlink($asdsdf);
+        }
+        $model->delete();
     }
+
+    public function search()
+    {
+        return view('admin.post.search');
+    }
+
+    public function autocomplete(Request $request)
+    {
+        $data = [];
+  
+        if($request->filled('q')){
+            $data = Post::select("title", "id")
+                        ->where('title', 'LIKE', '%'. $request->get('q'). '%')
+                        ->get();
+        }
+        // dd($data);
+    
+        return response()->json($data);
+    }
+
+    public function dataappend(Request $request)
+    {
+        
+        $post = Post::find($request->id);
+    
+        return view('admin.post.partials.data',compact('post'));
+    }
+
 }

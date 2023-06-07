@@ -22,6 +22,9 @@ Route::get('/', function () {
 //Frontend Route
 Route::get('about', 'App\Http\Controllers\Homecontroller@about')->name('about');
 Route::get('post-detail/{slug}', 'App\Http\Controllers\Homecontroller@single_post')->name('single-post');
+
+Route::get('categories/{slug}', 'App\Http\Controllers\Homecontroller@post_categories')->name('post_categories');
+
 Route::get('single', 'App\Http\Controllers\Homecontroller@single')->name('single');
 
 
@@ -39,6 +42,12 @@ Route::group(['middleware' => ['auth','admin']] , function(){
     
     Route::get('/admin/post/delete/{id}' , 'App\Http\Controllers\Postcontroller@delete')->name('posts.delete');
     Route::resource('posts', 'App\Http\Controllers\Postcontroller');
+
+
+    // Search Select2
+    Route::get('/admin/search' , 'App\Http\Controllers\Postcontroller@search')->name('select.search');
+    Route::get('/admin/search/autocomplete' , 'App\Http\Controllers\Postcontroller@autocomplete')->name('select.search-autocomplete');
+    Route::get('/admin/search/dataappend' , 'App\Http\Controllers\Postcontroller@dataappend')->name('select.search-dataappend');
 });
 
 
