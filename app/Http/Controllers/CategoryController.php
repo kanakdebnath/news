@@ -49,12 +49,14 @@ class CategoryController extends Controller
         
     }
     
-    public function delete($id){
+    public function delete(Request $request){
 
-        $model = Category::findOrFail($id);
+        $model = Category::findOrFail($request->id);
         $model->delete();
 
-        return redirect()->route('category.index')->with('message','Category Delete Successfully');
+        return response()->json([
+            'success' => 'Category Delete Successfully!'
+        ]);
         
     }
 

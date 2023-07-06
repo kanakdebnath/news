@@ -22,6 +22,15 @@
             <div class="card-body">
               <h5 class="card-title">All Categories</h5>
 
+
+              {{-- @if (\Session::has('message'))
+                  <div class="alert alert-success">
+                      <ul>
+                          <li>{!! \Session::get('message') !!}</li>
+                      </ul>
+                  </div>
+              @endif --}}
+
               <!-- Default Table -->
               <table class="table">
                 <thead>
@@ -41,7 +50,7 @@
                     <td>{{ $model->status }}</td>
                     <td>
                         <a class="btn btn-warning" href="{{ route('category.edit',$model->id) }}">Edit</a>
-                        <a onclick=" return confirm('Are you sure you want to delete this item?');" class="btn btn-danger" href="{{ route('category.delete',$model->id) }}">Delete</a>
+                        <button data-id="{{ $model->id }}"  class="btn btn-danger deleteRecord" >Delete</button>
                     </td>
                   </tr>
                   
@@ -60,3 +69,45 @@
 
 
 @endsection
+
+@push('script')
+  <script>
+
+    $(".deleteRecord").click(function(){
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          var id = $(this).data("id");
+          $tr= $(this).closest("tr");
+          var token = $("meta[name='csrf-token']").attr("content");
+          $.ajax(
+          {
+              url: "{{ route('category.delete') }}",
+              type: 'DELETE',
+              data: {
+                  "id": id,
+                  "_token": token,
+              },
+              success: function (data){
+                  if (data.success) {
+                    toastr.success(data.success);
+                    $tr.remove();
+                  }
+              }
+          });
+        }
+      })
+
+
+    
+   
+});
+  </script>
+@endpush
