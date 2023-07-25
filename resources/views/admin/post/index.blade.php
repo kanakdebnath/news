@@ -50,6 +50,7 @@
                         <a class="btn btn-warning" href="{{ route('posts.edit',$model->id) }}">Edit</a>
                         <a onclick=" return confirm('Are you sure you want to delete this item?');" class="btn btn-danger" href="{{ route('posts.delete',$model->id) }}">Delete</a>
                     </td>
+
                   </tr>
                   
                   @endforeach

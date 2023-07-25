@@ -99,6 +99,8 @@
                   if (data.success) {
                     toastr.success(data.success);
                     $tr.remove();
+                  } else if(data.error){
+                    toastr.error(data.error);
                   }
               }
           });

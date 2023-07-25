@@ -115,6 +115,12 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+
+        if($request->tranding == 'on'){
+            $tranding = 1;
+        }else{
+            $tranding = 0;
+        }
        
        $model = $post;
        $model->title = $request->title;
@@ -122,6 +128,7 @@ class PostController extends Controller
        $model->status = $request->status;
        $model->short_description = $request->short_description;
        $model->description = $request->description;
+       $model->tranding = $tranding;
        $model->slug = Str::slug($request->title);
 
        if($request->hasFile('photo')){

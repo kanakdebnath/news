@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -52,6 +53,15 @@ class CategoryController extends Controller
     public function delete(Request $request){
 
         $model = Category::findOrFail($request->id);
+
+        $posts = Post::where('category_id',$request->id)->get()->count();
+
+        if($posts > 0){
+            return response()->json([
+                'error' => 'Category Has Post You can`t Delete!'
+            ]);
+        }
+
         $model->delete();
 
         return response()->json([

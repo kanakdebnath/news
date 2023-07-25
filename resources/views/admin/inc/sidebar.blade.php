@@ -13,14 +13,14 @@
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-journal-text"></i><span>Category</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="forms-nav" class="nav-content collapse {{ Request::is('admin/category*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ route('category.index') }}">
+            <a href="{{ route('category.index') }}" class="{{ Request::is('admin/category') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>All Category</span>
             </a>
           </li>
           <li>
-            <a href="{{ route('category.create') }}">
+            <a href="{{ route('category.create') }}" class="{{ Request::is('admin/category/create') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Add Category</span>
             </a>
           </li>

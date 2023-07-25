@@ -82,6 +82,19 @@
                 <label for="validationCustom04" class="form-label"> Description</label>
                 <textarea name="description" id="" cols="30" rows="10" class="form-control summernote">{{ $model->description }}</textarea>
               </div>
+
+
+              <div class="col-md-12">
+                <label for="validationCustom04" class="form-label"> Tranding</label>
+
+                <div class="form-check form-switch">
+                  <input class="form-check-input" name="tranding" {{ $model->tranding == 1?'checked':'' }} type="checkbox" id="flexSwitchCheckChecked" >
+                </div>
+
+                
+              </div>
+
+
               
               <div class="col-12">
                 <button class="btn btn-primary" type="submit">Update</button>

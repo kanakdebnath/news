@@ -15,6 +15,7 @@ class AddViewsToPostsTable extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             $table->string('views')->nullable();
+            $table->string('tranding')->nullable();
         });
     }
 
